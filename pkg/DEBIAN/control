@@ -6,4 +6,4 @@ Architecture: amd64
 Maintainer: Carlos Fdez. Llamas <hello@sirikon.me>
 Description: srk.bz Base Server
  https://github.com/srkbz/base-server
-Depends: caddy
+Depends: caddy, netdata
