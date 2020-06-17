@@ -12,8 +12,7 @@ function main {
         "default deny incoming" \
         "allow in 22 comment SSH" \
         "allow in 80 comment Caddy-HTTP" \
-        "allow in 443 comment Caddy-HTTPS" \
-        "allow in 25565 comment Minecraft" \
+        "allow in 443 comment Caddy-HTTPS"
 
     configure-caddy
     configure-netdata
@@ -34,7 +33,6 @@ function configure-caddy {
     log-title "Configuring Caddy"
     printf "%s\n" "import sites/*" > "/etc/caddy/Caddyfile"
     run-silent systemctl reload caddy
-    printf "\n"
 }
 
 function configure-netdata {
