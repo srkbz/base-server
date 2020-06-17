@@ -16,6 +16,7 @@ function main {
         "allow in 25565 comment Minecraft" \
 
     configure-caddy
+    configure-netdata
 }
 
 function apply-ufw {(
@@ -34,6 +35,14 @@ function configure-caddy {
     printf "%s\n" "import sites/*" > "/etc/caddy/Caddyfile"
     run-silent systemctl reload caddy
     printf "\n"
+}
+
+function configure-netdata {
+    log-title "Configuring Netdata"
+    mkdir -p /var/run/netdata
+    chown netdata:netdata /var/run/netdata
+    cp ./assets/netdata.conf /etc/netdata/netdata.conf
+    run-silent systemctl restart netdata
 }
 
 function load-config {
