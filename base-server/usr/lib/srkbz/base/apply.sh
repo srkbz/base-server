@@ -32,8 +32,8 @@ function configure-ufw {(
 
 function configure-caddy {
     log-title "Configuring Caddy"
-    printf "%s\n" "import sites/*" > "/etc/caddy/Caddyfile"
     mkdir -p /etc/caddy/sites
+    envsubst < ./assets/caddyfile > "/etc/caddy/Caddyfile"
     envsubst < ./assets/caddy-monitoring > "/etc/caddy/sites/monitoring"
     run-silent systemctl reload caddy
 }

@@ -9,8 +9,10 @@ function main {
     log-sep
 
     ask-for "Monitoring domain" monitoringDomain
+    ask-for "Monitoring secret path" monitoringSecretPath
     write-config \
-        "MONITORING_DOMAIN" $monitoringDomain
+        "MONITORING_DOMAIN" $monitoringDomain \
+        "MONITORING_SECRET_PATH" $monitoringSecretPath
 
     log-sep
 }
