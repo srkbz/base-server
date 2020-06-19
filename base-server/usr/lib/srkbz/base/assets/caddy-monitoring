@@ -1,0 +1,3 @@
+https://${MONITORING_DOMAIN} {
+    reverse_proxy unix//var/run/netdata/web.sock
+}

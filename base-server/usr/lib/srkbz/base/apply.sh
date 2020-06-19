@@ -7,31 +7,34 @@ CONFIG_PATH="/etc/srkbz/config-base.env"
 function main {
     load-config
 
-    apply-ufw \
-        "default allow outgoing" \
-        "default deny incoming" \
-        "allow in 22 comment SSH" \
-        "allow in 80 comment Caddy-HTTP" \
-        "allow in 443 comment Caddy-HTTPS"
-
+    configure-ufw
     configure-caddy
     configure-netdata
 }
 
-function apply-ufw {(
-    log-title "Applying UFW configuration"
+function configure-ufw {(
+    log-title "Configuring UFW"
     run-silent ufw --force reset
     rm /etc/ufw/*rules.*
-    for rule in "$@"
+
+    ufwRulesFiles=$(find /etc/srkbz/ufw/*)
+    for file in "$ufwRulesFiles"
     do
-        run-silent ufw $rule
+        log-info "file -> ${file}"
+        while IFS= read -r rule; do
+            log-info "ufw ${rule}"
+            run-silent ufw $rule
+        done < "$file"
     done
+
     run-silent ufw --force enable
 )}
 
 function configure-caddy {
     log-title "Configuring Caddy"
     printf "%s\n" "import sites/*" > "/etc/caddy/Caddyfile"
+    mkdir -p /etc/caddy/sites
+    envsubst < ./assets/caddy-monitoring > "/etc/caddy/sites/monitoring"
     run-silent systemctl reload caddy
 }
 
@@ -55,14 +58,18 @@ function log-title {
     printf ":: %s\n" "$1"
 }
 
+function log-info {
+    printf ":::: %s\n" "$1"
+}
+
 function run-silent {
     set +e
     output=$("$@" 2>&1)
     result=$?
     set -e
     if [ "$result" -gt "0" ]; then
-        log-error "Error while running command:"
-        log-error "$*"
+        printf "Error while running command:\n"
+        printf "$*\n"
         printf "%s\n" "$output"
         exit "$result"
     fi

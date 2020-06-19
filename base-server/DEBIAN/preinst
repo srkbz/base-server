@@ -8,9 +8,9 @@ function main {
 
     log-sep
 
-    ask-for "Machine domain" domain
+    ask-for "Monitoring domain" monitoringDomain
     write-config \
-        "DOMAIN" $domain
+        "MONITORING_DOMAIN" $monitoringDomain
 
     log-sep
 }

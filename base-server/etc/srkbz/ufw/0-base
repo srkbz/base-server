@@ -1,0 +1,5 @@
+default allow outgoing
+default deny incoming
+allow in 22 comment SSH
+allow in 80 comment Caddy-HTTP
+allow in 443 comment Caddy-HTTPS
