@@ -1,0 +1,9 @@
+Package: srkbz-apt
+Version: 0.1.0
+Section: base
+Priority: optional
+Architecture: amd64
+Maintainer: Carlos Fdez. Llamas <hello@sirikon.me>
+Description: srk.bz APT
+ https://github.com/srkbz/infra
+Depends: srkbz-base

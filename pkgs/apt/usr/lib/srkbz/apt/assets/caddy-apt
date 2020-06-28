@@ -1,0 +1,3 @@
+https://${APT_DOMAIN} {
+    root /srv/apt/public
+}
