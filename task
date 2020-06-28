@@ -1,0 +1,65 @@
+#!/usr/bin/env bash
+
+commands=(install build)
+
+function install {
+    pkgName="${1:-""}"
+    check-package-exists "$pkgName"
+
+    build "${pkgName}"
+    sudo apt install -y "./out/srkbz-${pkgName}.deb"
+}
+
+function build {
+    pkgName="${1:-""}"
+    check-package-exists "$pkgName"
+
+    mkdir -p ./out
+    rm -f "./out/srkbz-${pkgName}.deb"
+    dpkg-deb --build "./pkgs/${pkgName}" "./out/srkbz-${pkgName}.deb"
+}
+
+function check-package-exists {
+    pkgName="$1"
+    if [ "$pkgName" = "" ]; then
+        printf "%s\n" "Package name is missing"
+        exit 1
+    fi
+
+    if [ ! -d "./pkgs/${pkgName}" ]; then
+        printf "%s\n" "Package '${pkgName}' does not exist."
+        exit 1
+    fi
+}
+
+
+
+
+
+
+
+
+
+
+
+function help {
+    printf "%s\n" "Available commands:"
+    printf " %s\n" "${commands[@]}" help
+}
+
+function run-command {
+    command="$1"
+    args=("${@:2}")
+    for c in "${commands[@]}"; do
+        if [ "$c" = "$command" ]; then
+            ("$command" "${args[@]}")
+            return
+        fi
+    done
+    printf "%s\n" "Command '${command}' does not exist."
+}
+
+set -euo pipefail
+cd "$(dirname "${BASH_SOURCE[0]}")"
+[ -z "${1:-""}" ] || [ "${1:-""}" = "help" ] && help && exit 0
+run-command "${1}" "${@:2}"
