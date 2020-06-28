@@ -1,0 +1,8 @@
+Package: srkbz-repo
+Version: 0.1.0
+Section: base
+Priority: optional
+Architecture: amd64
+Maintainer: Carlos Fdez. Llamas <hello@sirikon.me>
+Description: srk.bz Repo
+ https://github.com/srkbz/infra
