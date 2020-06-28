@@ -1,9 +1,9 @@
-Package: srkbz-base-server
+Package: srkbz-base
 Version: 0.1.0
 Section: base
 Priority: optional
 Architecture: amd64
 Maintainer: Carlos Fdez. Llamas <hello@sirikon.me>
-Description: srk.bz Base Server
- https://github.com/srkbz/base-server
+Description: srk.bz Base
+ https://github.com/srkbz/infra
 Depends: caddy, netdata

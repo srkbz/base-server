@@ -11,8 +11,8 @@ function main {
     ask-for "Monitoring domain" monitoringDomain
     ask-for "Monitoring secret path" monitoringSecretPath
     write-config \
-        "MONITORING_DOMAIN" $monitoringDomain \
-        "MONITORING_SECRET_PATH" $monitoringSecretPath
+        "MONITORING_DOMAIN" "$monitoringDomain" \
+        "MONITORING_SECRET_PATH" "$monitoringSecretPath"
 
     log-sep
 }
@@ -24,13 +24,13 @@ function exit-if-config-already-exists {
 }
 
 function ask-for {
-    printf "$1: "
-    read -r $2
+    printf "%s: " "$1"
+    read -r "$2"
 }
 
 function write-config {
     mkdir -p "$(dirname ${CONFIG_PATH})"
-    printf "%s=%s\n" $@ > $CONFIG_PATH
+    printf "%s=%s\n" "$@" > $CONFIG_PATH
 }
 
 function log-sep {

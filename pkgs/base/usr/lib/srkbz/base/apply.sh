@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 set -euo pipefail
-cd "$(realpath $(dirname ${BASH_SOURCE[0]}))"
+cd "$(realpath "$(dirname "${BASH_SOURCE[0]}")")"
 
 CONFIG_PATH="/etc/srkbz/config-base.env"
 
@@ -18,12 +18,14 @@ function configure-ufw {(
     rm /etc/ufw/*rules.*
 
     ufwRulesFiles=$(find /etc/srkbz/ufw/*)
-    for file in "$ufwRulesFiles"
+    for file in $ufwRulesFiles
     do
-        log-info "file -> ${file}"
-        while IFS= read -r rule; do
-            log-info "ufw ${rule}"
-            run-silent ufw $rule
+        log-info "[FILE] ${file}"
+        while read -r -a rule; do
+            if [[ ${#rule[@]} -gt 0 ]]; then
+                log-info "ufw ${rule[*]}"
+                run-silent ufw "${rule[@]}"
+            fi
         done < "$file"
     done
 
@@ -35,7 +37,7 @@ function configure-caddy {
     mkdir -p /etc/caddy/sites
     envsubst < ./assets/caddyfile > "/etc/caddy/Caddyfile"
     envsubst < ./assets/caddy-monitoring > "/etc/caddy/sites/monitoring"
-    run-silent systemctl reload caddy
+    run-silent systemctl restart caddy
 }
 
 function configure-netdata {
@@ -51,7 +53,7 @@ function load-config {
 		printf "Config file is missing\n"
 		exit 1
 	fi
-	export $(cat ${CONFIG_PATH} | xargs)
+	export "$(< "${CONFIG_PATH}" xargs)"
 }
 
 function log-title {
@@ -69,7 +71,7 @@ function run-silent {
     set -e
     if [ "$result" -gt "0" ]; then
         printf "Error while running command:\n"
-        printf "$*\n"
+        printf "%s\n" "$*"
         printf "%s\n" "$output"
         exit "$result"
     fi
