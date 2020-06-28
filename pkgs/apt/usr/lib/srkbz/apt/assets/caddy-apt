@@ -1,3 +1,4 @@
 https://${APT_DOMAIN} {
-    root /srv/apt/public
+    root * /srv/apt/public
+    file_server
 }

@@ -53,7 +53,7 @@ function load-config {
 		printf "Config file is missing\n"
 		exit 1
 	fi
-	export "$(< "${CONFIG_PATH}" xargs)"
+	export $(< "${CONFIG_PATH}" xargs)
 }
 
 function log-title {
