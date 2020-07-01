@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-commands=(install build)
+commands=(install build build-all)
 
 function install {
     pkgName="${1:-""}"
@@ -17,6 +17,14 @@ function build {
     mkdir -p ./out
     rm -f "./out/srkbz-${pkgName}.deb"
     dpkg-deb --build "./pkgs/${pkgName}" "./out/srkbz-${pkgName}.deb"
+    version=$(dpkg-deb -f "./out/srkbz-${pkgName}.deb" Version)
+    mv "./out/srkbz-${pkgName}.deb" "./out/srkbz-${pkgName}_${version}.deb"
+}
+
+function build-all {
+    ls "./pkgs" | while IFS=$'\n' read -r pkg; do
+		build "$pkg"
+	done
 }
 
 function check-package-exists {
