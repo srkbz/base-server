@@ -2,7 +2,7 @@
 set -euo pipefail
 cd "$(realpath "$(dirname "${BASH_SOURCE[0]}")")"
 
-CONFIG_PATH="/etc/srkbz/config-base.env"
+CONFIG_PATH="/etc/srkbz/config.env"
 
 function main {
     load-config

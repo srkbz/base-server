@@ -1,2 +1,3 @@
 #!/usr/bin/env bash
-/usr/lib/srkbz/base/apply.sh
+/usr/bin/srkbz-configure
+/usr/bin/srkbz-apply
