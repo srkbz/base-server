@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-CONFIG_KEYS="/etc/srkbz/config/0-base"
+CONFIG_KEYS_FOLDER="/etc/srkbz/config"
 CONFIG_PATH="/etc/srkbz/config.env"
 
 function main {
@@ -36,7 +36,14 @@ function load-config {
 }
 
 function get-config-keys {
-    cat "${CONFIG_KEYS}"
+    configFiles=$(find ${CONFIG_KEYS_FOLDER}/*)
+    for file in $configFiles; do
+        while read -r line; do
+            if [[ ! "${line}" = "" ]]; then
+                printf "%s\n" "${line}"
+            fi
+        done < "$file"
+    done
 }
 
 function write-config {

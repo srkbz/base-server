@@ -6,4 +6,4 @@ Architecture: amd64
 Maintainer: Carlos Fdez. Llamas <hello@sirikon.me>
 Description: srk.bz APT
  https://github.com/srkbz/infra
-Depends: srkbz-base, apt-ftparchive
+Depends: srkbz-base, apt-utils

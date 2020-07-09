@@ -7,12 +7,12 @@ CONFIG_PATH="/etc/srkbz/config.env"
 function main {
     load-config
 
-    configure-ufw
-    configure-caddy
-    configure-netdata
+    apply-ufw
+    apply-patches
+    run-apply-hooks
 }
 
-function configure-ufw {(
+function apply-ufw {(
     log-title "Configuring UFW"
     run-silent ufw --force reset
     rm /etc/ufw/*rules.*
@@ -32,20 +32,26 @@ function configure-ufw {(
     run-silent ufw --force enable
 )}
 
-function configure-caddy {
-    log-title "Configuring Caddy"
-    mkdir -p /etc/caddy/sites
-    envsubst < ./assets/caddyfile > "/etc/caddy/Caddyfile"
-    envsubst < ./assets/caddy-monitoring > "/etc/caddy/sites/monitoring"
-    run-silent systemctl restart caddy
+function apply-patches {
+    log-title "Applying patches"
+    patchPaths=$(find /etc/srkbz/patch/*)
+    for path in $patchPaths; do
+        if [ -f "${path}" ]; then
+            target="${path##*etc/srkbz/patch}"
+            log-info "${path} -> ${target}"
+            mkdir -p "$(dirname "${target}")"
+            envsubst < "${path}" > "${target}"
+        fi
+    done
 }
 
-function configure-netdata {
-    log-title "Configuring Netdata"
-    mkdir -p /var/run/netdata
-    chown netdata:netdata /var/run/netdata
-    cp ./assets/netdata.conf /etc/netdata/netdata.conf
-    run-silent systemctl restart netdata
+function run-apply-hooks {
+    log-title "Running apply hooks"
+    hooks=$(find /etc/srkbz/hook/apply/*)
+    for hook in $hooks; do
+        log-info "${hook}"
+        run-silent "${hook}"
+    done
 }
 
 function load-config {
