@@ -1,3 +1,4 @@
 #!/usr/bin/env bash
+mkdir -p /var/srkbz/apt/public/packages
 /usr/bin/srkbz-configure
 /usr/bin/srkbz-apply

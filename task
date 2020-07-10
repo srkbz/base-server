@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-commands=(install build build-all remote-install)
+commands=(install build build-all remote-install publish)
 
 function install {
     pkgName="${1:-""}"
@@ -37,8 +37,20 @@ function remote-install {
     for package in "${packages[@]}"; do
         build "${package}"
         scp "./out/srkbz-${package}"*.deb "${target}:${homeDir}/.srkbz-infra-drop/"
-        ssh "${target}" "apt install \"${homeDir}/.srkbz-infra-drop/srkbz-${package}\"*.deb"
+        ssh "${target}" "apt-get install -y \"${homeDir}/.srkbz-infra-drop/srkbz-${package}\"*.deb"
     done
+}
+
+function publish {
+    target="$1"
+    packages=("${@:2}")
+
+    for package in "${packages[@]}"; do
+        build "${package}"
+        scp "./out/srkbz-${package}"*.deb "${target}:/var/srkbz/apt/public/packages/"
+    done
+
+    ssh "${target}" "srkbz-apt-refresh"
 }
 
 function check-package-exists {
