@@ -1,4 +1,4 @@
 https://${APT_DOMAIN} {
     root * /var/srkbz/apt/public
-    file_server
+    file_server browse
 }
