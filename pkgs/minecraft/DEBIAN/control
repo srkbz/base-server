@@ -1,0 +1,9 @@
+Package: srkbz-minecraft
+Version: 0.1.0
+Section: base
+Priority: optional
+Architecture: amd64
+Maintainer: Carlos Fdez. Llamas <hello@sirikon.me>
+Description: srk.bz Minecraft
+ https://github.com/srkbz/infra
+Depends: screen, srkbz-base, ourcraft

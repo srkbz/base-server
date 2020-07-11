@@ -1,0 +1,18 @@
+[Unit]
+Description=srkbz Minecraft
+
+[Service]
+Type=forking
+
+WorkingDirectory=/var/srkbz/minecraft
+Environment=PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+ExecStart=/usr/bin/screen -dmS ourcraft  ourcraft start
+
+Restart=on-failure
+RestartSec=3
+
+KillSignal=SIGINT
+TimeoutStopSec=60
+
+[Install]
+WantedBy=default.target
