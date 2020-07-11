@@ -1,4 +1,6 @@
 https://${APT_DOMAIN} {
     root * /var/srkbz/apt/public
-    file_server browse
+    file_server {
+        browse /lib/srkbz/apt/browse-template.html
+    }
 }
