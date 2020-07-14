@@ -28,3 +28,11 @@ resource "hetznerdns_record" "record" {
     type = "A"
     ttl = 60
 }
+
+resource "hetznerdns_record" "mon-record" {
+    zone_id = data.hetznerdns_zone.srkbz.id
+    name = "m-${var.service_name}.infra"
+    value = "${var.service_name}.infra"
+    type = "CNAME"
+    ttl = 60
+}
