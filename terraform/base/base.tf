@@ -19,6 +19,7 @@ resource "hcloud_server" "server" {
   image = "ubuntu-20.04"
   location = "nbg1"
   server_type = "cx11"
+  user_data = file("${path.module}/cloudinit")
 }
 
 resource "hetznerdns_record" "record" {

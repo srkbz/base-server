@@ -1,0 +1,8 @@
+#cloud-config
+package_update: true
+package_upgrade: true
+runcmd:
+- [wget, -O, /tmp/repo.deb, "https://apt.srk.bz/packages/srkbz-repo_0.1.0.deb"]
+- [apt-get, install, -y, /tmp/repo.deb]
+- [apt-get, update]
+- [touch, /root/cloud-init-worked]
