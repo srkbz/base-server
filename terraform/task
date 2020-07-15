@@ -15,7 +15,7 @@ function apply {
 	set -e
 	terraform workspace select "${workspaceName}"
 	terraform apply \
-		-auto-approve -input=false -no-color base
+		-auto-approve -input=false -no-color ./modules/base/
 }
 
 function install-plugins {
