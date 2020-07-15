@@ -10,7 +10,7 @@ function init {
 
 function apply {(
 	export TF_IN_AUTOMATION=yes
-	export TF_LOG=TRACE
+	#export TF_LOG=TRACE
 	export TF_INPUT=0
 	workspaceName="${1}"
 	set +e
