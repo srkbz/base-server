@@ -1,20 +1,9 @@
-variable "hetzner_dns_token" {}
-variable "hetzner_cloud_token" {}
-
-provider "hetznerdns" {
-	apitoken = var.hetzner_dns_token
-}
-
-provider "hcloud" {
-	token = var.hetzner_cloud_token
-}
-
 data "hetznerdns_zone" "srkbz" {
 	name = "srk.bz"
 }
 
 resource "hcloud_server" "server" {
-	name = "${workspace.name}.infra.srk.bz"
+	name = "${terraform.workspace}.infra.srk.bz"
 	image = "ubuntu-20.04"
 	location = "nbg1"
 	server_type = "cx11"
@@ -23,7 +12,7 @@ resource "hcloud_server" "server" {
 
 resource "hetznerdns_record" "record" {
 	zone_id = data.hetznerdns_zone.srkbz.id
-	name = "${workspace.name}.infra"
+	name = "${terraform.workspace}.infra"
 	value = hcloud_server.server.ipv4_address
 	type = "A"
 	ttl = 60
@@ -31,8 +20,8 @@ resource "hetznerdns_record" "record" {
 
 resource "hetznerdns_record" "mon-record" {
 	zone_id = data.hetznerdns_zone.srkbz.id
-	name = "m-${workspace.name}.infra"
-	value = "${workspace.name}.infra"
+	name = "m-${terraform.workspace}.infra"
+	value = "${terraform.workspace}.infra"
 	type = "CNAME"
 	ttl = 60
 }

@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
 
-commands=(init apply install-plugins)
+export TF_IN_AUTOMATION=yes
+#export TF_LOG=TRACE
+export TF_INPUT=0
+
+commands=(init apply destroy install-plugins)
 
 function init {
 	postgresConnectionString="$1"
@@ -9,16 +13,15 @@ function init {
 }
 
 function apply {(
-	export TF_IN_AUTOMATION=yes
-	#export TF_LOG=TRACE
-	export TF_INPUT=0
 	workspaceName="${1}"
-	set +e
-	terraform workspace new "${workspaceName}" 2>/dev/null
-	set -e
-	terraform workspace select "${workspaceName}"
-	terraform apply \
-		-auto-approve -no-color ./modules/base/
+	ensure-workspace "${workspaceName}"
+	terraform apply -auto-approve -no-color
+)}
+
+function destroy {(
+	workspaceName="${1}"
+	ensure-workspace "${workspaceName}"
+	terraform destroy
 )}
 
 function install-plugins {
@@ -39,7 +42,13 @@ function install-plugins {
     rm -rf "$tempFolder"
 }
 
-
+function ensure-workspace {
+	workspaceName="${1}"
+	set +e
+	terraform workspace new "${workspaceName}" 2>/dev/null
+	set -e
+	terraform workspace select "${workspaceName}"
+}
 
 
 
