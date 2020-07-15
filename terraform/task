@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
 export TF_IN_AUTOMATION=yes
-#export TF_LOG=TRACE
 export TF_INPUT=0
+#export TF_LOG=TRACE
 
 commands=(init apply destroy install-plugins)
 

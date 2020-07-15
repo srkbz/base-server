@@ -5,4 +5,5 @@ runcmd:
 - [wget, -O, /tmp/repo.deb, "https://apt.srk.bz/packages/srkbz-repo_0.1.0.deb"]
 - [apt-get, install, -y, /tmp/repo.deb]
 - [apt-get, update]
+- [apt-get, install, -y, srkbz-base]
 - [touch, /root/cloud-init-worked]
