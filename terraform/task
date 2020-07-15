@@ -8,15 +8,18 @@ function init {
 		-backend-config="conn_str=${postgresConnectionString}"
 }
 
-function apply {
+function apply {(
+	export TF_IN_AUTOMATION=yes
+	export TF_LOG=TRACE
+	export TF_INPUT=0
 	workspaceName="${1}"
 	set +e
 	terraform workspace new "${workspaceName}" 2>/dev/null
 	set -e
 	terraform workspace select "${workspaceName}"
 	terraform apply \
-		-auto-approve -input=false -no-color ./modules/base/
-}
+		-auto-approve -no-color ./modules/base/
+)}
 
 function install-plugins {
     pluginVersion="1.0.3"
