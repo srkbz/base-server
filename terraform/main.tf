@@ -19,3 +19,10 @@ module "base" {
 	target_package = "srkbz-minecraft"
 	config_extra = "MINECRAFT_DOMAIN=${terraform.workspace}.infra.srk.bz\n"
 }
+
+output "monitoring_secret" {
+  value = module.base.monitoring_secret
+}
+output "monitoring_domain" {
+  value = module.base.monitoring_domain
+}

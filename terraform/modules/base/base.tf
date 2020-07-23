@@ -86,3 +86,10 @@ resource "null_resource" "after-all" {
 		]
 	}
 }
+
+output "monitoring_secret" {
+  value = random_string.monitoring-secret.result
+}
+output "monitoring_domain" {
+  value = "m-${terraform.workspace}.infra.srk.bz"
+}
