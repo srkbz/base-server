@@ -39,6 +39,7 @@ resource "hcloud_server" "server" {
 	provisioner "file" {
 		content = <<EOF
 MONITORING_DOMAIN=m-${terraform.workspace}.infra.srk.bz
+MINECRAFT_DOMAIN=${terraform.workspace}.infra.srk.bz
 MONITORING_SECRET_PATH=${random_string.monitoring-secret.result}
 EOF
 		destination = "/etc/srkbz/config.env"
@@ -78,7 +79,7 @@ resource "null_resource" "after-all" {
 	provisioner "remote-exec" {
 		inline = [
 			"while [ ! -f /tmp/cloud-init-done ]; do sleep 2; done",
-			"apt-get install -y srkbz-base"
+			"apt-get install -y srkbz-minecraft"
 		]
 	}
 }

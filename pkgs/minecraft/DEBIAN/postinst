@@ -3,3 +3,4 @@ mkdir -p /var/srkbz/minecraft
 systemctl enable srkbz-minecraft
 srkbz-configure
 srkbz-apply
+systemctl start srkbz-minecraft
