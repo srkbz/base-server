@@ -25,7 +25,7 @@ function destroy {(
 )}
 
 function install-plugins {
-    pluginVersion="1.0.3"
+    pluginVersion="1.0.5"
     pluginsFolder="$(pwd)/terraform.d/plugins/linux_amd64"
     tempFolder="$(pwd)/terraform.d/temp"
     mkdir -p "$pluginsFolder"
