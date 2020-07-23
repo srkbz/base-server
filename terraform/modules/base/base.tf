@@ -1,3 +1,6 @@
+variable "config_extra" { }
+variable "target_package" { }
+
 data "hetznerdns_zone" "srkbz" {
 	name = "srk.bz"
 }
@@ -39,8 +42,8 @@ resource "hcloud_server" "server" {
 	provisioner "file" {
 		content = <<EOF
 MONITORING_DOMAIN=m-${terraform.workspace}.infra.srk.bz
-MINECRAFT_DOMAIN=${terraform.workspace}.infra.srk.bz
 MONITORING_SECRET_PATH=${random_string.monitoring-secret.result}
+${var.config_extra}
 EOF
 		destination = "/etc/srkbz/config.env"
 	}
@@ -79,7 +82,7 @@ resource "null_resource" "after-all" {
 	provisioner "remote-exec" {
 		inline = [
 			"while [ ! -f /tmp/cloud-init-done ]; do sleep 2; done",
-			"apt-get install -y srkbz-minecraft"
+			"apt-get install -y ${var.target_package}"
 		]
 	}
 }

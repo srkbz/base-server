@@ -14,5 +14,8 @@ provider "hcloud" {
 }
 
 module "base" {
-  source = "./modules/base"
+	source = "./modules/base"
+
+	target_package = "srkbz-minecraft"
+	config_extra = "MINECRAFT_DOMAIN=${terraform.workspace}.infra.srk.bz\n"
 }
