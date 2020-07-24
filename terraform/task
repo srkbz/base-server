@@ -4,7 +4,7 @@ export TF_IN_AUTOMATION=yes
 export TF_INPUT=0
 #export TF_LOG=TRACE
 
-commands=(init apply destroy install-plugins)
+commands=(init apply destroy install-plugins list)
 
 function init {
 	postgresConnectionString="$1"
@@ -41,6 +41,10 @@ function install-plugins {
     )
 
     rm -rf "$tempFolder"
+}
+
+function list {
+    pipenv run python ./list.py
 }
 
 function ensure-workspace {
