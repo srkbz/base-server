@@ -31,6 +31,9 @@ MINECRAFT_ADMIN_PASSWORD=${base64encode(bcrypt(random_string.minecraft-admin-pas
 EOF
 }
 
+output "minecraft_admin_domain" {
+	value = "${terraform.workspace}.infra.srk.bz"
+}
 output "minecraft_admin_password" {
 	value = random_string.minecraft-admin-password.result
 }
