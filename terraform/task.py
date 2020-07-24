@@ -28,9 +28,9 @@ def destroy(workspace):
 
 @app.command(help="Lists running workspaces with extended info")
 def list():
-    conn = psycopg2.connect(get_connection_string())
+    conn = psycopg2.connect(get_connection_string(), options=f'-c search_path=terraform_remote_state')
     cur = conn.cursor()
-    cur.execute("set search_path to terraform_remote_state; select * from states;")
+    cur.execute("select * from states;")
 
     for _, name, state_raw in cur.fetchall():
         state = json.loads(state_raw)
