@@ -6,4 +6,4 @@ Architecture: amd64
 Maintainer: Carlos Fdez. Llamas <hello@sirikon.me>
 Description: srk.bz Minecraft
  https://github.com/srkbz/infra
-Depends: srkbz-base, ourcraft
+Depends: screen, srkbz-base, ourcraft
