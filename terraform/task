@@ -1,85 +1,91 @@
 #!/usr/bin/env bash
-
-export TF_IN_AUTOMATION=yes
-export TF_INPUT=0
-#export TF_LOG=TRACE
-
-commands=(init apply destroy install-plugins list)
-
-function init {
-	postgresConnectionString="$1"
-	terraform init \
-		-no-color -input=false \
-		-backend-config="conn_str=${postgresConnectionString}"
-}
-
-function apply {(
-	workspaceName="${1}"
-	ensure-workspace "${workspaceName}"
-	terraform apply -auto-approve -no-color -input=false
-)}
-
-function destroy {(
-	workspaceName="${1}"
-	ensure-workspace "${workspaceName}"
-	terraform destroy
-)}
-
-function install-plugins {
-    pluginVersion="1.0.5"
-    pluginsFolder="$(pwd)/terraform.d/plugins/linux_amd64"
-    tempFolder="$(pwd)/terraform.d/temp"
-    mkdir -p "$pluginsFolder"
-    mkdir -p "$tempFolder"
-
-    (
-        cd "$tempFolder"
-        wget -O "hetznerdns-tf.tar.gz" \
-            "https://github.com/timohirt/terraform-provider-hetznerdns/releases/download/v${pluginVersion}/terraform-provider-hetznerdns_${pluginVersion}_linux_amd64.tar.gz"
-        tar xzf "hetznerdns-tf.tar.gz"
-        mv "./terraform-provider-hetznerdns" "$pluginsFolder"
-    )
-
-    rm -rf "$tempFolder"
-}
-
-function list {
-    pipenv run python ./list.py
-}
-
-function ensure-workspace {
-	workspaceName="${1}"
-	set +e
-	terraform workspace new "${workspaceName}" 2>/dev/null
-	set -e
-	terraform workspace select "${workspaceName}"
-}
-
-
-
-
-
-
-
-
-function help {
-    printf "%s\n" "Available commands:"
-    printf " %s\n" "${commands[@]}" help
-}
-
-function run-command {
-    command="$1"
-    args=("${@:2}")
-    for c in "${commands[@]}"; do
-        if [ "$c" = "$command" ]; then
-            ("$command" "${args[@]}")
-            return
-        fi
-    done
-    printf "%s\n" "Command '${command}' does not exist."
-}
-
 set -euo pipefail
 cd "$(dirname "${BASH_SOURCE[0]}")"
-[ -z "${1:-""}" ] || [ "${1:-""}" = "help" ] && help && exit 0
-run-command "${1}" "${@:2}"
+pipenv run python ./main.py "$@"
+
+
+# #!/usr/bin/env bash
+
+# export TF_IN_AUTOMATION=yes
+# export TF_INPUT=0
+# #export TF_LOG=TRACE
+
+# commands=(init apply destroy install-plugins list)
+
+# function init {
+# 	postgresConnectionString="$1"
+# 	terraform init \
+# 		-no-color -input=false \
+# 		-backend-config="conn_str=${postgresConnectionString}"
+# }
+
+# function apply {(
+# 	workspaceName="${1}"
+# 	ensure-workspace "${workspaceName}"
+# 	terraform apply -auto-approve -no-color -input=false
+# )}
+
+# function destroy {(
+# 	workspaceName="${1}"
+# 	ensure-workspace "${workspaceName}"
+# 	terraform destroy
+# )}
+
+# function install-plugins {
+#     pluginVersion="1.0.5"
+#     pluginsFolder="$(pwd)/terraform.d/plugins/linux_amd64"
+#     tempFolder="$(pwd)/terraform.d/temp"
+#     mkdir -p "$pluginsFolder"
+#     mkdir -p "$tempFolder"
+
+#     (
+#         cd "$tempFolder"
+#         wget -O "hetznerdns-tf.tar.gz" \
+#             "https://github.com/timohirt/terraform-provider-hetznerdns/releases/download/v${pluginVersion}/terraform-provider-hetznerdns_${pluginVersion}_linux_amd64.tar.gz"
+#         tar xzf "hetznerdns-tf.tar.gz"
+#         mv "./terraform-provider-hetznerdns" "$pluginsFolder"
+#     )
+
+#     rm -rf "$tempFolder"
+# }
+
+# function list {
+#     pipenv run python ./list.py
+# }
+
+# function ensure-workspace {
+# 	workspaceName="${1}"
+# 	set +e
+# 	terraform workspace new "${workspaceName}" 2>/dev/null
+# 	set -e
+# 	terraform workspace select "${workspaceName}"
+# }
+
+
+
+
+
+
+
+
+# function help {
+#     printf "%s\n" "Available commands:"
+#     printf " %s\n" "${commands[@]}" help
+# }
+
+# function run-command {
+#     command="$1"
+#     args=("${@:2}")
+#     for c in "${commands[@]}"; do
+#         if [ "$c" = "$command" ]; then
+#             ("$command" "${args[@]}")
+#             return
+#         fi
+#     done
+#     printf "%s\n" "Command '${command}' does not exist."
+# }
+
+# set -euo pipefail
+# cd "$(dirname "${BASH_SOURCE[0]}")"
+# [ -z "${1:-""}" ] || [ "${1:-""}" = "help" ] && help && exit 0
+# run-command "${1}" "${@:2}"

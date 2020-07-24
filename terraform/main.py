@@ -1,7 +1,13 @@
 import json
 import psycopg2
+import click
 
-def main():
+@click.group()
+def app():
+    pass
+
+@app.command()
+def list():
     conn = psycopg2.connect(get_connection_string())
     cur = conn.cursor()
     cur.execute("set search_path to terraform_remote_state; select * from states;")
@@ -25,4 +31,5 @@ def get_connection_string():
         pg_connection_string = terraform_state['backend']['config']['conn_str']
     return pg_connection_string
 
-main()
+if __name__ == '__main__':
+    app()
