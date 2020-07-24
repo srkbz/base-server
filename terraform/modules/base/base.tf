@@ -19,7 +19,7 @@ resource "hcloud_server" "server" {
 	name = "${terraform.workspace}.infra.srk.bz"
 	image = "ubuntu-20.04"
 	location = "nbg1"
-	server_type = "cx11"
+	server_type = "cpx21"
 	user_data = file("${path.module}/cloudinit")
 
 	ssh_keys = data.hcloud_ssh_keys.all_keys.ssh_keys.*.id
