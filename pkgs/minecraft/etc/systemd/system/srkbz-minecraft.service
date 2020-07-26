@@ -2,8 +2,6 @@
 Description=srkbz Minecraft
 
 [Service]
-Type=forking
-
 WorkingDirectory=/var/srkbz/minecraft
 Environment=PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 ExecStart=/usr/bin/ourcraft daemon
