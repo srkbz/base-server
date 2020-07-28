@@ -1,0 +1,16 @@
+[Unit]
+Description=srkbz Workr
+
+[Service]
+WorkingDirectory=/var/srkbz/workr
+Environment=PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+ExecStart=/usr/bin/workr
+
+Restart=on-failure
+RestartSec=3
+
+KillSignal=SIGINT
+TimeoutStopSec=60
+
+[Install]
+WantedBy=default.target
