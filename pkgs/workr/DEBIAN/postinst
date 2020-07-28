@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
-mkdir -p /var/srkbz/workr/jobs
+mkdir -p /var/srkbz/workr
+if [ ! -d "/var/srkbz/workr/.git" ]; then
+	git clone "https://github.com/srkbz/workr-jobs.git" "/var/srkbz/workr"
+fi
 systemctl enable srkbz-workr
 srkbz-configure
 srkbz-apply
