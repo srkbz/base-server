@@ -1,9 +1,9 @@
 Package: srkbz-workr
-Version: 0.3.0
+Version: 0.4.1
 Section: base
 Priority: optional
 Architecture: amd64
 Maintainer: Carlos Fdez. Llamas <hello@sirikon.me>
 Description: srk.bz Workr
  https://github.com/srkbz/infra
-Depends: srkbz-base, workr, git
+Depends: srkbz-base, workr, git, docker.io, docker-compose

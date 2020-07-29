@@ -3,6 +3,18 @@ mkdir -p /var/srkbz/workr
 if [ ! -d "/var/srkbz/workr/.git" ]; then
 	git clone "https://github.com/srkbz/workr-jobs.git" "/var/srkbz/workr"
 fi
+
+username="workr"
+getent group "${username}" &>/dev/null || groupadd --system "${username}"
+id -u "${username}" &>/dev/null || useradd \
+	--system \
+	--gid "${username}" \
+	--home-dir "/var/srkbz/workr" \
+	--no-create-home \
+	--shell /sbin/nologin \
+	"${username}"
+chown -R "${username}:${username}" "/var/srkbz/workr"
+
 systemctl enable srkbz-workr
 srkbz-configure
 srkbz-apply
