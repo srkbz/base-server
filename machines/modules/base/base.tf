@@ -8,14 +8,6 @@ data "hetznerdns_zone" "srkbz" {
 
 data "hcloud_ssh_keys" "all_keys" {}
 
-resource "random_string" "monitoring-secret" {
-  length  = 32
-  special = false
-  number  = true
-  lower   = true
-  upper   = false
-}
-
 resource "hcloud_server" "server" {
   name        = "${var.name}.infra.srk.bz"
   image       = "ubuntu-20.04"
