@@ -16,10 +16,3 @@ module "base" {
   target_package = "srkbz-base"
   config_extra   = ""
 }
-
-output "monitoring_secret" {
-  value = module.base.monitoring_secret
-}
-output "monitoring_domain" {
-  value = module.base.monitoring_domain
-}

@@ -42,8 +42,7 @@ resource "hcloud_server" "server" {
   }
   provisioner "file" {
     content     = <<EOF
-MONITORING_DOMAIN=m-${var.name}.infra.srk.bz
-MONITORING_SECRET_PATH=${random_string.monitoring-secret.result}
+MACHINE_NAME=${var.name}
 ${var.config_extra}
 EOF
     destination = "/etc/srkbz/config.env"
@@ -86,11 +85,4 @@ resource "null_resource" "after-all" {
       "apt-get install -y ${var.target_package}"
     ]
   }
-}
-
-output "monitoring_secret" {
-  value = random_string.monitoring-secret.result
-}
-output "monitoring_domain" {
-  value = "m-${var.name}.infra.srk.bz"
 }
