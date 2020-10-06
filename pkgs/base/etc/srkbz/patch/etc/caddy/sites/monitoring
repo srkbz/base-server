@@ -1,6 +1,0 @@
-https://${MONITORING_DOMAIN} {
-    route /${MONITORING_SECRET_PATH}/* {
-        uri strip_prefix /${MONITORING_SECRET_PATH}
-        reverse_proxy unix//var/run/netdata/web.sock
-    }
-}
