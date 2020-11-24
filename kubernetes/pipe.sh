@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-HOST=kube.srk.bz
+HOST=kube.master.srk.bz
 LOCAL_PORT=20000
 REMOTE_PORT=20000
 
