@@ -14,7 +14,12 @@ u.App("buletina-demo", {
     port: 80,
     env: {
         BULETINA_PORT: 80,
-        BULETINA_BASE_URL: "https://buletina-demo.srk.bz"
+        BULETINA_BASE_URL: "https://buletina-demo.srk.bz",
+        BULETINA_JWT_SECRET: "asdfasdfasdfasdfasdf",
+        BULETINA_SMTP_SERVER: "asdfasdfasdfasdfasdf",
+        BULETINA_SMTP_USERNAME: "asdfasdfasdfasdfasdf",
+        BULETINA_SMTP_PASSWORD: "asdfasdfasdfasdfasdf",
+        BULETINA_SMTP_SENDER: "asdfasdfasdfasdfasdf"
     }
 })
 +
