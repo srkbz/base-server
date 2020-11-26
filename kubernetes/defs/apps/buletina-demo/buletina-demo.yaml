@@ -1,0 +1,86 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: buletina-demo-deployment
+  labels:
+    app: buletina-demo
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: buletina-demo
+  template:
+    metadata:
+      labels:
+        app: buletina-demo
+    spec:
+      containers:
+      - name: buletina
+        image: sirikon/buletina:1.0.0_20201126_000656
+        env:
+        - name: BULETINA_PORT
+          value: "80"
+        - name: BULETINA_BASE_URL
+          value: "https://kube.master.srk.bz"
+        - name: BULETINA_JWT_SECRET
+          value: "asdfasdfasdfasdfasdf"
+        - name: BULETINA_SMTP_SERVER
+          value: "asdfasdfasdfasdfasdf"
+        - name: BULETINA_SMTP_USERNAME
+          value: "asdfasdfasdfasdfasdf"
+        - name: BULETINA_SMTP_PASSWORD
+          value: "asdfasdfasdfasdfasdf"
+        - name: BULETINA_SMTP_SENDER
+          value: "asdfasdfasdfasdfasdf"
+        ports:
+        - containerPort: 80
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: buletina-demo-service
+spec:
+  selector:
+    app: buletina-demo
+  ports:
+    - port: 80
+      targetPort: 80
+
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: kube-master-srk-bz
+spec:
+  secretName: kube-master-srk-bz-tls
+  issuerRef:
+    name: letsencrypt-prod
+    kind: ClusterIssuer
+  commonName: kube.master.srk.bz
+  dnsNames:
+  - kube.master.srk.bz
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: buletina-demo-ingress
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: buletina-demo-service
+            port:
+              number: 80
+  tls:
+  - hosts:
+    - kube.master.srk.bz
+    secretName: kube-master-srk-bz-tls
