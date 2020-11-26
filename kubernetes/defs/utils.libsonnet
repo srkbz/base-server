@@ -12,7 +12,7 @@ local Deployment(name, config) = {
         labels: AppLabels(name)
     },
     spec: {
-        replicas: 3,
+        replicas: 1,
         selector: { matchLabels: AppLabels(name) },
         template: {
             metadata: { labels: AppLabels(name) },
@@ -20,12 +20,12 @@ local Deployment(name, config) = {
                 containers: [{
                     name: name,
                     image: config.image,
-                    ports: {
+                    ports: [{
                         containerPort: config.port
-                    },
+                    }],
                     env: [
-                        { name: sd.key, value: sd.value },
-                        for sd in keyValues(if std.objectHas(config, 'env') then config.env else {})
+                        { name: e.key, value: std.toString(e.value) },
+                        for e in keyValues(if std.objectHas(config, 'env') then config.env else {})
                     ]
                 }],
             },
@@ -41,10 +41,10 @@ local Service(name, config) = {
     },
     spec: {
         selector: AppLabels(name),
-        ports: {
+        ports: [{
             port: config.port,
             targetPort: config.port
-        },
+        }],
     },
 };
 
@@ -73,10 +73,12 @@ local Ingress(name, config) = {
         annotations: {
             ['kubernetes.io/ingress.class']: 'traefik',
             ['cert-manager.io/cluster-issuer']: config.certIssuer,
+            ['traefik.ingress.kubernetes.io/redirect-entry-point']: 'https',
         },
     },
     spec: {
         rules: [{
+            host: config.domain,
             http: {
                 paths: [{
                     path: '/',
@@ -91,6 +93,10 @@ local Ingress(name, config) = {
                     }
                 }]
             }
+        }],
+        tls: [{
+            hosts: [config.domain],
+            secretName: name + '-certificate-tls'
         }]
     }
 };

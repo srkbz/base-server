@@ -5,4 +5,4 @@ mkdir -p defs-gen
 cd defs-gen
 rm -rf *
 
-jsonnet ../config/config.jsonnet -c -m .
+jsonnet ../defs/main.jsonnet -c -m .
