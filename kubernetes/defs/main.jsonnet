@@ -16,11 +16,11 @@ u.App("buletina-demo", {
         BULETINA_PORT: 80,
         BULETINA_BASE_URL: "https://buletina-demo.srk.bz",
         BULETINA_DATABASE_URL: config.buletinaDatabaseUrl,
-        BULETINA_JWT_SECRET: "asdfasdfasdfasdfasdf",
-        BULETINA_SMTP_SERVER: "asdfasdfasdfasdfasdf",
-        BULETINA_SMTP_USERNAME: "asdfasdfasdfasdfasdf",
-        BULETINA_SMTP_PASSWORD: "asdfasdfasdfasdfasdf",
-        BULETINA_SMTP_SENDER: "asdfasdfasdfasdfasdf"
+        BULETINA_JWT_SECRET: config.buletinaJwtSecret,
+        BULETINA_SMTP_SERVER: config.buletinaSmtpServer,
+        BULETINA_SMTP_USERNAME: config.buletinaSmtpUsername,
+        BULETINA_SMTP_PASSWORD: config.buletinaSmtpPassword,
+        BULETINA_SMTP_SENDER: config.buletinaSmtpSender,
     }
 })
 +
