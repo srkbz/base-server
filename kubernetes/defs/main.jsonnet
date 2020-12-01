@@ -7,10 +7,10 @@ local u = import 'utils.libsonnet';
     email: 'hello@sirikon.me'
 })
 
-+u.App("buletina_bilbaoswcraft", {
++u.App("buletina-bilbaoswcraft", {
     domain: "bilbao.softwarecrafters.org",
     certIssuer: 'letsencrypt-prod',
-    image: "sirikon/buletina:1.0.0_20201126_231117",
+    image: "sirikon/srkbz-buletina-custom:bilbaoswcraft_20201201_190243",
     port: 80,
     env: {
         BULETINA_PORT: 80,
