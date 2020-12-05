@@ -7,6 +7,17 @@ local u = import 'utils.libsonnet';
     email: 'hello@sirikon.me'
 })
 
++u.App("fathom", {
+    domain: "fathom.srk.bz",
+    certIssuer: 'letsencrypt-prod',
+    image: "usefathom/fathom",
+    port: 80,
+    env: {
+		FATHOM_SERVER_ADDR: "0.0.0.0:80",
+		FATHOM_DATABASE_DRIVER: "postgres",
+	} + config.fathom
+})
+
 +u.App("buletina-bilbaoswcraft", {
     domain: "bilbao.softwarecrafters.org",
     certIssuer: 'letsencrypt-prod',
