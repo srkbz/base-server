@@ -2,6 +2,8 @@ local config = import '../config.json';
 local u = import 'utils.libsonnet';
 {}
 
++u.DashboardUser()
+
 +u.CertIssuer("letsencrypt-prod", {
     server: 'https://acme-v02.api.letsencrypt.org/directory',
     email: 'hello@sirikon.me'

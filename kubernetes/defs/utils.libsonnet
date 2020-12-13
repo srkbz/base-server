@@ -125,6 +125,33 @@ local ClusterIssuer(name, config) = {
     }
 };
 
+local ServiceAccount(name, namespace) = {
+	apiVersion: 'v1',
+	kind: 'ServiceAccount',
+	metadata: {
+		name: name,
+		namespace: namespace
+	},
+};
+
+local ClusterAdminRoleBinding(serviceAccountName, namespace) = {
+	apiVersion: 'rbac.authorization.k8s.io/v1',
+	kind: 'ClusterRoleBinding',
+	metadata: {
+		name: serviceAccountName
+	},
+	roleRef: {
+		apiGroup: 'rbac.authorization.k8s.io',
+		kind: 'ClusterRole',
+		name: 'cluster-admin'
+	},
+	subjects: [{
+		kind: 'ServiceAccount',
+		name: serviceAccountName,
+		namespace: namespace
+	}],
+};
+
 {
     App(name, config):: {
         ['apps/' + name + '/' + name + '-deployment.json']: Deployment(name, config),
@@ -135,4 +162,8 @@ local ClusterIssuer(name, config) = {
     CertIssuer(name, config):: {
         ['cert-manager/issuers/' + name + '.json']: ClusterIssuer(name, config),
     },
+	DashboardUser():: {
+		['dashboard-user/service-account.json']: ServiceAccount('admin-user', 'kubernetes-dashboard'),
+		['dashboard-user/cluster-role-binding.json']: ClusterAdminRoleBinding('admin-user', 'kubernetes-dashboard'),
+	},
 }
