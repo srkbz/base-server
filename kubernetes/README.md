@@ -27,6 +27,13 @@ and run:
 ./configure-kubectl.sh
 ```
 
+After that, run this command in a separate terminal and leave it running.
+It's a pipe to the cluster's Kubernetes API:
+
+```bash
+./pipe.sh
+```
+
 Then, getting the running node and pods like this, should work, and everything
 should be in `Running` or `Completed` state:
 
