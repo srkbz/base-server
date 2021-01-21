@@ -26,8 +26,16 @@ local Deployment(name, config) = {
                     env: [
                         { name: e.key, value: std.toString(e.value) },
                         for e in keyValues(if std.objectHas(config, 'env') then config.env else {})
-                    ]
+                    ],
+					volumeMounts: [
+						{ mountPath: v.value, name: v.key },
+						for v in keyValues(if std.objectHas(config, 'volumes') then config.volumes else {})
+					],
                 }],
+				volumes: [
+					{ name: v.key, hostPath: { path: '/srkbz/data/kube-app/' + name + '/' + v.key, type: 'DirectoryOrCreate' }, },
+					for v in keyValues(if std.objectHas(config, 'volumes') then config.volumes else {})
+				],
             },
         },
     },

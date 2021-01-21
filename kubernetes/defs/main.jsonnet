@@ -34,6 +34,9 @@ local u = import 'utils.libsonnet';
 // +u.App("nginx-test", {
 //     domain: 'kube.master.srk.bz',
 //     certIssuer: 'letsencrypt-prod',
-//     image: 'nginx:1.7.9',
-//     port: 80
+//     image: 'nginx:1.19',
+//     port: 80,
+// 	volumes: {
+// 		'html': '/usr/share/nginx/html'
+// 	},
 // })
