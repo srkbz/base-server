@@ -1,2 +1,1 @@
-deb [trusted=yes] https://apt.fury.io/caddy/ /
 deb [trusted=yes] https://apt.srk.bz/ /

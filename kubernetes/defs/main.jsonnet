@@ -31,6 +31,17 @@ local u = import 'utils.libsonnet';
     } + config.buletina_bilbaoswcraft
 })
 
++u.App("apt-repository", {
+    domain: 'apt.srk.bz',
+    certIssuer: 'letsencrypt-prod',
+    image: 'sirikon/apt-repository:20210124_031142',
+    port: 80,
+	env: config.apt_repository,
+	volumes: {
+		'data': '/data'
+	},
+})
+
 // +u.App("nginx-test", {
 //     domain: 'kube.master.srk.bz',
 //     certIssuer: 'letsencrypt-prod',
