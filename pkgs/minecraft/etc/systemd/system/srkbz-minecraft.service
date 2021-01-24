@@ -2,7 +2,7 @@
 Description=srkbz Minecraft
 
 [Service]
-WorkingDirectory=/var/srkbz/minecraft
+WorkingDirectory=/srkbz/workspace/minecraft
 Environment=PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 ExecStart=/usr/bin/ourcraft daemon
 
