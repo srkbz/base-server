@@ -60,8 +60,7 @@ function run-apply-hooks {
 
 function load-config {
 	if [ ! -f "$CONFIG_PATH" ]; then
-		printf "Config file is missing\n"
-		exit 1
+		return 0
 	fi
 	export $(< "${CONFIG_PATH}" xargs)
 }

@@ -12,13 +12,15 @@ function main {
     descs=()
 
     while IFS=$'\t' read -r key desc; do
-        currentValue="${!key:-""}"
-        if [ "$currentValue" = "" ]; then
-            keys+=("${key}")
-            descs+=("${desc}")
-            continue
-        fi
-        write-config "${key}" "${currentValue}"
+		if [ "${key}" != "" ]; then
+			currentValue="${!key:-""}"
+			if [ "$currentValue" = "" ]; then
+				keys+=("${key}")
+				descs+=("${desc}")
+				continue
+			fi
+			write-config "${key}" "${currentValue}"
+		fi
     done <<< "$(get-config-keys)"
 
     for i in "${!keys[@]}"; do
