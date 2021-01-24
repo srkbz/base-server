@@ -2,7 +2,7 @@
 set -euo pipefail
 cd "$(realpath "$(dirname "${BASH_SOURCE[0]}")")"
 
-CONFIG_PATH="/etc/srkbz/config.env"
+CONFIG_PATH="/srkbz/config.env"
 
 function main {
     load-config
@@ -17,7 +17,9 @@ function apply-ufw {(
     run-silent ufw --force reset
     rm /etc/ufw/*rules.*
 
-    ufwRulesFiles=$(find /etc/srkbz/ufw/*)
+	[ -e "/srkbz/features/ufw/" ] || return 0
+
+    ufwRulesFiles=$(find /srkbz/features/ufw/*)
     for file in $ufwRulesFiles
     do
         log-info "[FILE] ${file}"
@@ -34,7 +36,8 @@ function apply-ufw {(
 
 function apply-patches {
     log-title "Applying patches"
-    patchPaths=$(find /etc/srkbz/patch/*)
+	[ -e "/srkbz/features/patch/" ] || return 0
+    patchPaths=$(find /srkbz/features/patch/*)
     for path in $patchPaths; do
         if [ -f "${path}" ]; then
             target="${path##*etc/srkbz/patch}"
@@ -47,6 +50,7 @@ function apply-patches {
 
 function run-apply-hooks {
     log-title "Running apply hooks"
+	[ -e "/etc/srkbz/hook/apply/" ] || return 0
     hooks=$(find /etc/srkbz/hook/apply/*)
     for hook in $hooks; do
         log-info "${hook}"

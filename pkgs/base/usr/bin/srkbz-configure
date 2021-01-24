@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-/usr/lib/srkbz/base/configure.sh
+/srkbz/src/base/configure.sh

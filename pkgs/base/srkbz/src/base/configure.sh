@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-CONFIG_KEYS_FOLDER="/etc/srkbz/config"
-CONFIG_PATH="/etc/srkbz/config.env"
+CONFIG_KEYS_FOLDER="/srkbz/features/config"
+CONFIG_PATH="/srkbz/config.env"
 
 function main {
     load-config
@@ -36,6 +36,7 @@ function load-config {
 }
 
 function get-config-keys {
+	[ -e "${CONFIG_KEYS_FOLDER}/" ] || return 0
     configFiles=$(find ${CONFIG_KEYS_FOLDER}/*)
     for file in $configFiles; do
         while read -r line; do

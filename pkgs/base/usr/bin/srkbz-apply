@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-/usr/lib/srkbz/base/apply.sh
+/srkbz/src/base/apply.sh
