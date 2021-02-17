@@ -1,3 +1,2 @@
 #!/usr/bin/env bash
-/usr/bin/srkbz-configure
-/usr/bin/srkbz-apply
+srkbz-apply

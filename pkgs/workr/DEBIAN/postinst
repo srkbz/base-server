@@ -16,6 +16,5 @@ id -u "${username}" &>/dev/null || useradd \
 chown -R "${username}:${username}" "/var/srkbz/workr"
 
 systemctl enable srkbz-workr
-srkbz-configure
 srkbz-apply
 systemctl start srkbz-workr
