@@ -1,1 +1,3 @@
 /out
+/temp
+/pkgs/quickjs/usr/bin/qjs
