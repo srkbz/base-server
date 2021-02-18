@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-(cd /srkbz && qjs --std ./src/base/apply.js)
+(cd /srkbz && qjs --std --include ./src/base/common.js ./src/base/apply.js)

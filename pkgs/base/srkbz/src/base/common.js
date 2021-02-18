@@ -1,11 +1,20 @@
-export const paths = {
+const paths = {
 	srkbz(subpath) {
 		const [workdir] = os.getcwd();
 		return workdir + '/' + subpath;
 	},
 }
 
-export function cmd(args) {
+const log = {
+	title(text) {
+		console.log(`:: ${text}`);
+	},
+	info(text) {
+		console.log(`:::: ${text}`);
+	}
+}
+
+function cmd(args) {
 	const [output_read, output_write] = os.pipe()
 	const [error_read, error_write] = os.pipe()
 	os.exec(args, { stdout: output_write, stderr: error_write })
