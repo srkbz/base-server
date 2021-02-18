@@ -1,17 +1,17 @@
 function main() {
-	log.title('Configuring UFW')
-	const ufwRules = getUFWRules();
+	log.title('Configuring UFW');
 
-	log.info('ufw --force reset')
+	log.info('ufw --force reset');
 	cmd(['ufw', '--force', 'reset']);
-	cmd(['sh', '-c', 'rm /etc/ufw/*rules.*'])
+	cmd(['sh', '-c', 'rm /etc/ufw/*rules.*']);
 
-	ufwRules.forEach(r => {
-		log.info(`ufw ${r}`)
-		cmd(['sh', '-c', `ufw ${r}`]);
+	getUFWRules().forEach(r => {
+		const command = `ufw ${r}`;
+		log.info(command);
+		cmd(['sh', '-c', command]);
 	})
 
-	log.info('ufw --force enable')
+	log.info('ufw --force enable');
 	cmd(['ufw', '--force', 'enable']);
 }
 
