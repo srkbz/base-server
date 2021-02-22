@@ -13,7 +13,7 @@ function main() {
 			'--system',
 			'--gid', `"${user.group}"`,
 			'--home-dir', `"${user.home}"`, '--create-home',
-			'--shell', '/sbin/nologin',
+			'--shell', '/usr/bin/bash',
 			`"${user.username}"`
 		].join(' ')}`]);
 	});

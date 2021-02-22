@@ -1,0 +1,8 @@
+{
+	"groups": ["minecraft"],
+	"users": [{
+		"username": "minecraft",
+		"group": "minecraft",
+		"home": "/srkbz/home/minecraft"
+	}]
+}
