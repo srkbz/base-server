@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-(cd "/srkbz/workspace/minecraft" && sudo -u minecraft ourcraft configure)
+(cd "/srkbz/workspace/minecraft" && ourcraft configure)
+chown -R minecraft:minecraft "/srkbz/workspace/minecraft"
