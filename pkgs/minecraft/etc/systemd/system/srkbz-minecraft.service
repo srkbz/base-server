@@ -2,11 +2,12 @@
 Description=srkbz Minecraft
 
 [Service]
+Type=forking
 User=minecraft
 Group=minecraft
 WorkingDirectory=/srkbz/workspace/minecraft
-Environment=PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-ExecStart=/usr/bin/ourcraft daemon
+Environment=PATH=/usr/lib/jvm/java-11-openjdk-amd64/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+ExecStart=/usr/bin/screen -dmS minecraft /srkbz/src/minecraft-run
 
 Restart=on-failure
 RestartSec=3

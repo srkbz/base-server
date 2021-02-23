@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 srkbz-apply
-systemctl enable srkbz-minecraft
+srkbz-minecraft-service enable
