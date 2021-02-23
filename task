@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-commands=(install build build-all publish remote-install provision download-quickjs-release)
+commands=(install build build-all publish remote-install provision download-quickjs-release download-ttyd-release)
 
 function install {
     pkgName="${1:-""}"
@@ -90,13 +90,22 @@ function download-quickjs-release {
 	rm -rf "./temp"
 }
 
+function download-ttyd-release {
+	ttydVersion="$(get-pkg-version ttyd)"
+	printf "%s\n" "Downloading ttyd ${ttydVersion}"
+	mkdir -p "./pkgs/ttyd/usr/bin"
+	rm -rf "./pkgs/ttyd/usr/bin/*"
+	wget -O "./pkgs/ttyd/usr/bin/ttyd" "https://github.com/tsl0922/ttyd/releases/download/${ttydVersion}/ttyd.x86_64"
+	chmod +x "./pkgs/ttyd/usr/bin/ttyd"
+}
 
 
 
 
 
-
-
+function get-pkg-version {
+	cat "./pkgs/${1}/DEBIAN/control" | grep "Version" | cut -d" " -f2
+}
 
 function help {
     printf "%s\n" "Available commands:"

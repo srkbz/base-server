@@ -1,0 +1,8 @@
+Package: ttyd
+Version: 1.6.3
+Section: base
+Priority: optional
+Architecture: amd64
+Maintainer: Carlos Fdez. Llamas <hello@sirikon.me>
+Description: srk.bz ttyd distribution
+ https://github.com/srkbz/infra
