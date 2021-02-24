@@ -2,12 +2,10 @@
 set -euo pipefail
 
 jarfile="$(cat ./minecraft_jarfile)"
-total_memory="$(grep MemTotal /proc/meminfo | awk '{print $2}')"
-memory="$(qjs --std -e "std.puts(Math.round(${total_memory} * 0.4))")"
+memory="$("$(dirname "${BASH_SOURCE[0]}")/get-memory-for-minecraft")"
 
 printf "%s: %s\n" \
 	"JAR file" "${jarfile}" \
-	"System memory" "${total_memory}k" \
 	"Memory assigned to Java process" "${memory}k"
 
 # Aikar's Flags

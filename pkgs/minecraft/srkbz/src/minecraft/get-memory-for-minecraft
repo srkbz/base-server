@@ -1,0 +1,25 @@
+#!/usr/bin/env -S qjs --std
+
+const ONE_GB_IN_KB = 1000000;
+
+function main() {
+	const totalMemory = getSystemTotalMemory();
+	std.puts( Math.max( Math.floor(totalMemory * 0.8), ONE_GB_IN_KB) );
+}
+
+function getSystemTotalMemory() {
+	const memoryInfo = getSystemMemoryInfo()
+	return memoryInfo["MemTotal"].match(/^([0-9]+)/)[1];
+}
+
+function getSystemMemoryInfo() {
+	const file = std.open('/proc/meminfo', 'r');
+	const data = file.readAsString();
+	file.close();
+	return Object.fromEntries(data.split('\n')
+		.map(line => line.match(/(^[a-zA-Z0-9_\(\)]+):\ +([a-zA-Z0-9 ]+)$/))
+		.filter(result => result !== null)
+		.map(line => {return [line[1], line[2]]}));
+}
+
+main();
