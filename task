@@ -57,9 +57,9 @@ function provision {
     target="$1"
     package="$2"
 
-    remote-install "$1" "repo"
-    ssh "$1" 'apt-get update && apt-get --with-new-pkgs -y upgrade'
-    remote-install "$1" "$2"
+	ssh "$target" 'wget -O "repo.deb" https://apt.srk.bz/packages/srkbz-repo_0.1.0.deb && apt-get install ./repo.deb'
+	ssh "$target" 'apt-get update && apt-get --with-new-pkgs -y upgrade'
+	ssh "$target" "apt-get install -y ${package}"
 }
 
 function check-package-exists {
