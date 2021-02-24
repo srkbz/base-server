@@ -60,7 +60,6 @@ function provision {
     remote-install "$1" "repo"
     ssh "$1" 'apt-get update && apt-get --with-new-pkgs -y upgrade'
     remote-install "$1" "$2"
-    ssh "$1" 'reboot'
 }
 
 function check-package-exists {
