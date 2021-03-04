@@ -34,7 +34,7 @@ local u = import 'utils.libsonnet';
 +u.App("apt-repository", {
     domain: 'apt.srk.bz',
     certIssuer: 'letsencrypt-prod',
-    image: 'sirikon/apt-repository:20210124_031142',
+    image: 'sirikon/apt-repository:20210304_015145',
     port: 80,
 	env: config.apt_repository,
 	volumes: {
