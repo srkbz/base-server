@@ -1,5 +1,5 @@
 Package: quickjs
-Version: 2020.11.08
+Version: 2021.03.27
 Section: base
 Priority: optional
 Architecture: amd64

@@ -76,7 +76,7 @@ function check-package-exists {
 }
 
 function download-quickjs-release {
-	quickjsVersion="2020-11-08"
+	quickjsVersion="2021-03-27"
 	mkdir -p "./pkgs/quickjs/usr/bin"
 	rm -rf "./pkgs/quickjs/usr/bin/*"
 	mkdir -p "./temp"
