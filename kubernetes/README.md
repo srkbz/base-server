@@ -114,3 +114,18 @@ curl -sfL https://get.k3s.io | sh -
 
 The command will upgrade and restart the k3s service without stopping the
 running pods.
+
+### Fix certificate issues
+
+```sh
+./gen.sh
+cd ./defs-gen/apps/<problematic app>/
+kubectl delete -f . --recursive
+cd ../../../
+./apply-apps.sh
+
+# Wait
+# See progress with
+kubectl get certificates
+kubectl describe certificate xxxxx
+```
